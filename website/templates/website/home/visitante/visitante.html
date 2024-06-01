@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{% static 'refeicao.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+        <title>Módulo Refeitório</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+            <div class="container-fluid">
+
+                <img src="{% static 'refeicao.png' %}" alt="" width="6%">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+                        aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionários</a>
+                                <a class="dropdown-item" target="_self">Visitantes</a>
+                                <a class="dropdown-item" href="/home/equipamento/#" target="_self"> Equipamentos</a>
+                                <a class="dropdown-item" href="/home/refeicao/#" target="_self">Refeições</a>
+                                <a class="dropdown-item" href="/home/grupo_refeicao/#" target="_self">Grupos de Refeições</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Monitoramento</a>
+                                <a class="dropdown-item" href="/home/relatorio/refeicoes">Relatório de Refeições</a>
+                                <a class="dropdown-item" href="#">Relatório totalizado por Funcionario</a>
+                                <a class="dropdown-item" href="#">Relatório totalizado por Refeição</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Logins</a>
+                                <a class="dropdown-item" href="#">permissões</a>
+                                <a class="dropdown-item" href="#">grupos de refeição</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sobre</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Ajuda</a>
+                                <a class="dropdown-item" href="#">Sobre</a>
+
+
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <script src="{% static 'scripts.js' %}"></script>
+
+        <form method="post">
+            {% csrf_token %}
+
+
+            <h1>Cadastro de Visitante</h1>
+
+                    <h4>Matricula</h4>
+                    {{ form.matricula }}
+
+                    <h4>Nome</h4>
+                    {{ form.nome }}
+
+                    <h4>Documento</h4>
+                    {{ form.documento }}
+
+                    <h4>Credencial</h4>
+                    {{ form.credencial }}
+
+                    <div class="col-md-3">
+                        <h3>Visitado</h3>
+                        <select class="form-select" id="func" nome="func" required value="form.func">
+                            {% for c in completo %}
+                              <option>{{c.nome}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>Grupo de Refeição</h4>
+                        <select class="form-select" id="grup_ref" nome="grup_ref" required value="form.grup_ref">
+                            {% for g in grupo_refeicao %}
+                              <option> {{g.nome}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+
+                    <h4>Data Inicio</h4>
+                    <input type="date" id="form.data_inicio" name=data_inicio">
+                    <h4>Hora Inicial</h4>
+                    <input type="time" id="form.hora_inicio" name="hora_inicio" value="08:00">
+                    <h4>Data Final</h4>
+                    <input type="date" id="form.data_fim" name="data_fim">
+                    <h4>Hora Final</h4>
+                    <input type="time" id="form.hora_fim" name="hora_fim" value="18:00">
+                <br>
+                <br>
+                <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
+                <button type="alterar" value="alterar" name="alterar" class="btn btn-outline-warning">Alterar</button>
+                <button type="excluir" value="excluir" name="excluir" class="btn btn-outline-danger">Excluir</button>
+                <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
+
+
+        </form>
+
+    </body>
+</html>
