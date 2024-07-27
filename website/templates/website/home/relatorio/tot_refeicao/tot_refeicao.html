@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+
 {% load static %}
+
 <html lang="pt-br">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{% static 'refeicao.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
         <title>Módulo Refeitório</title>
@@ -11,10 +15,10 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
             <div class="container-fluid">
-              
-                <img src="{% static 'refeicao.png'%}" alt="" width="6%">
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" 
+
+                <img src="{% static 'refeicao.png' %}" alt="" width="6%">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
                         aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -23,22 +27,21 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="funcionario" target="_self">Funcionário</a>
-                                <a class="dropdown-item" href="visitante">Visitantes</a>
-                                <a class="dropdown-item" href="equipamento">Equipamentos</a>
-                                <a class="dropdown-item" href="refeicao">Refeições</a>
-                                <a class="dropdown-item" href="grupo_refeicao">Grupos de Refeições</a>
+                                <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionários</a>
+                                <a class="dropdown-item" href="/home/visitante/#" target="_self">Visitantes</a>
+                                <a class="dropdown-item" href="/home/equipamento/#">Equipamentos</a>
+                                <a class="dropdown-item" href="/home/refeicao/#">Refeições</a>
+                                <a class="dropdown-item" href="/home/grupo_refeicao/#">Grupos de Refeições</a>
 
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="relatorio/monitoramento">Monitoramento</a>
-                                <a class="dropdown-item" href="relatorio/refeicoes">Relatório de Refeições</a>
-                                <a class="dropdown-item" href="relatorio/tot_func">Relatório totalizado por Funcionario</a>
-                                <a class="dropdown-item" href="relatorio/tot_refeicao">Relatório totalizado por Refeição</a>
-
+                                <a class="dropdown-item" href="/home/relatorio/monitoramento/#">Monitoramento</a>
+                                <a class="dropdown-item" href="/home/relatorio/refeicoes/#">Relatório de Refeições</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_func/#">Relatório totalizado por Funcionario</a>
+                                <a class="dropdown-item" href="#">Relatório totalizado por Refeição</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -54,15 +57,36 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Ajuda</a>
                                 <a class="dropdown-item" href="#">Sobre</a>
-                                
-                               
+
+
                             </div>
                         </li>
-                        
-                          
+
+
                     </ul>
                 </div>
             </div>
-            <script src="{% static 'scripts.js' %}"></script>
+        </nav>
+        <script src="{% static 'scripts.js' %}"></script>
+
+        <h1>Relatorio Totalizado por Refeições</h1>
+        <form method="post">
+            {% csrf_token %}
+
+
+
+            <h3> Selecione a data inicial</h3>
+            <input type="date" id="form.data_inicio" name="data_inicio">
+
+                <h3>Selecione a data final</h3>
+            <input type="date" id="form.data_final" name="data_final">
+
+
+
+
+            <br>
+            <br>
+            <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
+        </form>
     </body>
-</html>        
+</html>

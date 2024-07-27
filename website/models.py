@@ -40,7 +40,7 @@ class Refeicao(models.Model):
     hora_fim = models.TimeField(null=True, blank=True)
     object = None
     def __str__(self):
-        return f"{self.id_ref} {self.nome} {self.hora_inicio} {self.hora_fim}"
+        return f"{self.id_ref} {self.valor} {self.nome} {self.hora_inicio} {self.hora_fim}"
 
 class Grupo_Refeicao(models.Model):
     id_grup_ref = models.CharField(max_length=10, null=False, blank=False, primary_key=True)

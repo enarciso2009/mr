@@ -2,6 +2,8 @@ import datetime
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpRequest, HttpResponseRedirect, Http404, HttpResponse
+from django.db.models import Sum, Count, Max, Min
+
 import datetime
 from website.forms import EquipamentoForm, RefeicaoForm, FuncionarioForm, Grupo_RefeicaoForm, VisitanteForm, BuscaForm, EventoForm
 from website.models import Equipamento, Refeicao, Funcionario, Grupo_Refeicao, Inter_grup_ref, Visitante, Evento
@@ -243,11 +245,14 @@ def cria_visitante(requisicao: HttpRequest):
         data_fim = requisicao.POST['data_fim']
         hora_fim = requisicao.POST['hora_fim']
 
-        funcionario = '2'
+        funcionario = requisicao.POST['matricula']
         grupo_refeicao = '2'
 
         func = Funcionario.objects.filter(matricula=funcionario)
         grup_ref = Grupo_Refeicao.objects.filter(id_grup_ref=grupo_refeicao)
+
+        for g in grup_ref:
+            print(f'este é o g {g.id_grup_ref}')
 
         print(f'este é matricula do post= {matricula}')
         print(f'este é nome post= {nome}')
@@ -262,8 +267,11 @@ def cria_visitante(requisicao: HttpRequest):
         print(f'este é o grup_ref do post= {grup_ref}')
         visitante = (matricula, nome, documento, credencial, func, grup_ref, data_inicio, hora_inicio, data_fim, hora_fim)
         print(f'este é o form = {visitante}')
-        #completo = Funcionario.objects.all()
+        completo = Funcionario.objects.all()
+        grupo_comp = Grupo_Refeicao.objects.all()
         context = {
+            'completo': completo,
+            'grupo_comp': grupo_comp,
             'form': form,
             'funcionario': funcionario,
             'grupo_refeicao': grupo_refeicao
@@ -520,35 +528,139 @@ def relatorio_refeicoes(requisicao: HttpRequest):
             print(f'data inicial {data_inicial}')
             data_final = requisicao.POST.get('data_final')
             print(f' data final {data_final}')
+            id = Refeicao.objects.values_list('id_ref', flat=True)
+            hora_i = Refeicao.objects.values_list('hora_inicio', flat=True)
+            hora_f = Refeicao.objects.values_list('hora_fim', flat=True)
+            print(f'dados de refeicao = {id, hora_i, hora_f}')
+            tabela_total = Refeicao.objects.all()
+            print(f'total = {tabela_total}')
+            horas = []
+            for tab in tabela_total:
+                print('Este é o for do tab')
+                id = tab.id_ref
+                print(id)
+                hi = tab.hora_inicio
+                print(hi)
+                hf = tab.hora_fim
+                print(hf)
+                horas += id, hi, hf
+                tipo_ref = tab.nome
+                valor = tab.valor
+                print(f'estes são nomes e valores de refeicao = {tipo_ref}, {valor}')
 
-            evento_cafe = Evento.objects.filter(data__range=(data_inicial, data_final)) \
-                                    .filter(hora__range=('06:00:00', '08:00:00'))
+            idr = horas[0]
+            refrr = []
+            refeicao_1 = Refeicao.objects.filter(id_ref=idr)
+            for refr in refeicao_1:
+                ref_nome_1 = refr.nome
+                ref_valor_1 = str(refr.valor)
+                refrr += ref_nome_1, ref_valor_1
+
+            evento_cafe= Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                                    .filter(hora__range=(horas[1], horas[2])) \
+                                    .order_by('data')
+
+            idr = horas[3]
+            refrr = []
+            refeicao_3 = Refeicao.objects.filter(id_ref=idr)
+            for refr in refeicao_3:
+                ref_nome_3 = refr.nome
+                ref_valor_3 = str(refr.valor)
+                refrr += ref_nome_3, ref_valor_3
 
             evento_almoco = Evento.objects.filter(data__range=(data_inicial, data_final)) \
-                                    .filter(hora__range=('11:00:00', '13:00:00'))
+                                   .filter(hora__range=(horas[4], horas[5])) \
+                                   .order_by('data')
+
+            idr = horas[6]
+            refrr = []
+            refeicao_6 = Refeicao.objects.filter(id_ref=idr)
+            for refr in refeicao_6:
+                ref_nome_6 = refr.nome
+                ref_valor_6 = str(refr.valor)
+                refrr += ref_nome_6, ref_valor_6
+
+            evento_cafe_tarde = Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                                  .filter(hora__range=(horas[7], horas[8])) \
+                                  .order_by('data')
+
+            idr = horas[9]
+            refrr = []
+            refeicao_9 = Refeicao.objects.filter(id_ref=idr)
+            for refr in refeicao_9:
+                ref_nome_9 = refr.nome
+                ref_valor_9 = str(refr.valor)
+                refrr += ref_nome_9, ref_valor_9
+
+            evento_jantar = Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                                  .filter(hora__range=(horas[10], horas[11])) \
+                                  .order_by('data')
+
+            idr = horas[12]
+            refrr = []
+            refeicao_12 = Refeicao.objects.filter(id_ref=idr)
+            for refr in refeicao_12:
+                ref_nome_12 = refr.nome
+                ref_valor_12 = str(refr.valor)
+                refrr += ref_nome_12, ref_valor_12
 
 
-            refeicao = Refeicao.objects.all()
-            #evento = Evento.objects.all()
+            evento_ceia = Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                                  .filter(hora__range=(horas[13], horas[14])) \
+                                  .order_by('data')
+
+
             context = {
-                'evento_cafe': evento_cafe,
+
+                
                 'evento_almoco': evento_almoco,
-                'refeicao':refeicao
+                'evento_cafe': evento_cafe,
+                'evento_cafe_tarde': evento_cafe_tarde,
+                'evento_jantar': evento_jantar,
+                'evento_ceia': evento_ceia,
+                'ref_nome_1': ref_nome_1,
+                'ref_valor_1': ref_valor_1,
+                'ref_nome_3': ref_nome_3,
+                'ref_valor_3': ref_valor_3,
+                'ref_nome_6': ref_nome_6,
+                'ref_valor_6': ref_valor_6,
+                'ref_nome_9': ref_nome_9,
+                'ref_valor_9': ref_valor_9,
+                'ref_nome_12': ref_nome_12,
+                'ref_valor_12': ref_valor_12
             }
             return render(requisicao, template_name='website/home/relatorio/refeicoes/resultado.html',
                       context=context)
 
-
+# Relatorio refeições totalizado por funcionario
 def tot_func(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
         print('entrou no get relatorio de tot_func')
         form = EventoForm()
-        return render(requisicao, template_name='website/home/relatorio/tot_func/tot_func.html', context={'form': form})
+        query = requisicao.GET.get('func')
+        print(f'nome = {query}')
+
+        print(f'este é o func = {query}')
+        if query:
+            print('entrou no if da query')
+            func = Funcionario.objects.filter(nome__istartswhith=query)
+        else:
+            print('entrou no else do get')
+            func = Funcionario.objects.all()
+        completo = Funcionario.objects.all()
+
+        context = {
+            'func': func,
+            'form': form,
+            'completo': completo
+        }
+        return render(requisicao, template_name='website/home/relatorio/tot_func/tot_func.html', context=context)
     elif requisicao.method == 'POST':
         print('entrou no post')
         print(f'este é o post = {requisicao.method == "POST"}')
-        #print(f'este é o botao incluir {requisicao.form.get()}')
+        func = requisicao.POST.get('func')
+        print(f'este é o func {func}')
         form = EventoForm(requisicao.POST)
         req = requisicao.POST
         for r in req.values():
@@ -558,22 +670,191 @@ def tot_func(requisicao: HttpRequest):
 
         if status == 'consultar':
             print('entrou no consultar')
-            print(f'este é o post {requisicao.POST}')
-            nome_v = requisicao.POST['nome']
+            print(f'este é o post consulta {requisicao.POST}')
             data_inicial = requisicao.POST['data_inicio']
             print(f'data inicial {data_inicial}')
             data_final = requisicao.POST.get('data_final')
             print(f' data final {data_final}')
+            funcionario = requisicao.POST.get('func')
+            print(f'funcionario = {funcionario}')
+            tabela_total = Refeicao.objects.all()
+            print(f'tabela total = {tabela_total}')
+            refeicoes = Refeicao.objects.aggregate(Count('id_ref'))
+            tot_ref = refeicoes["id_ref__count"]
 
-            #evento =  Evento.objects.filter(data__range=(data_inicial, data_final)), (nome__startswith=nome_v) #Evento.objects.filter(nome__istartswith=nome).values(),
-            evento = Evento.objects.filter(data__range=(data_inicial, data_final))\
-                    .filter(nome__istartswith=(nome_v))\
-                    .order_by('data')
+            eventos = []
+            horas = []
+            tot = []
+            total_eventos = []
+            n = 0
+
+            while n != tot_ref:
+
+                for tab in tabela_total:
+                    print('Este é o for do tab')
+                    id = tab.id_ref
+                    print(id)
+                    hi = tab.hora_inicio
+                    print(hi)
+                    hf = tab.hora_fim
+                    print(hf)
+                    horas += id, hi, hf
+                    tipo_ref = tab.nome
+                    valor = tab.valor
+                    print(f'estes são nomes e valores de refeicao = {tipo_ref}, {valor}')
+
+                    # pega todas as refeicoes
+                    idr = id
+                    refrr = []
+                    refeicao_12 = Refeicao.objects.filter(id_ref=idr)
+                    for refr in refeicao_12:
+                        ref_nome_12 = refr.nome
+                        ref_valor_12 = str(refr.valor)
+                        ref_hi = refr.hora_inicio
+                        ref_hf = refr.hora_fim
+                        refrr += ref_nome_12, ref_valor_12, ref_hi, ref_hf
+                        print(f'este é o refrr = {refrr}')
+                        print(f'este é o horario = {ref_hi} {ref_hf}')
+                        evento = Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                            .filter(nome__startswith=funcionario) \
+                            .filter(hora__range=(ref_hi, ref_hf))
 
 
+                        eventos += evento
+                        som_eventos = eventos, tipo_ref, valor
+                        print(f'este é o evento {evento}')
+                        total = len(evento)
+                        print(f'total de eventos = {total}')
+                        tot_t = total * float(ref_valor_12)
+
+
+                        total_eventos.append((funcionario, ref_nome_12, f'{str(total)}', ref_valor_12, f'{tot_t:.2f}'))
+
+
+                    n += 1
+
+            #total geral
+
+
+            eve_0 = total_eventos[0]
+            eve_1 = total_eventos[1]
+            eve_2 = total_eventos[2]
+            eve_3 = total_eventos[3]
+            eve_4 = total_eventos[4]
+
+            total_geral = float(eve_0[4]) + float(eve_1[4]) + float(eve_2[4]) + float(eve_3[4]) + float(eve_4[4])
+            tot_geral = (f'{total_geral:.2f}')
+            context = {
+                'funcionario': funcionario,
+                'eve_0': eve_0,
+                'eve_1': eve_1,
+                'eve_2': eve_2,
+                'eve_3': eve_3,
+                'eve_4': eve_4,
+                'tot_geral': tot_geral
+
+
+                }
             return render(requisicao, template_name='website/home/relatorio/tot_func/resultado.html',
-                          context={'evento': evento})
+                              context=context)
 
 
+        return render(requisicao, template_name='website/home/relatorio/tot_func/semdados.html')
 
 
+# Relatorios Refeições Totalizadas
+
+def tot_refeicao(requisicao: HttpRequest):
+    print(f"este é o GET = {requisicao.method == 'GET'}")
+    if requisicao.method == 'GET':
+        print('entrou no get relatorio de tot_refeicoes')
+        return render(requisicao, template_name='website/home/relatorio/tot_refeicao/tot_refeicao.html')
+    elif requisicao.method == 'POST':
+        print('entrou no post')
+        print(f'este é o post = {requisicao.method == "POST"}')
+        form = EventoForm(requisicao.POST)
+        req = requisicao.POST
+        for r in req.values():
+            status = r
+        print(f'este é o status =  {status}')
+
+        if status == 'consultar':
+            print('entrou no consultar')
+            print(f'este é o post consulta {requisicao.POST}')
+            data_inicial = requisicao.POST['data_inicio']
+            print(f'data inicial {data_inicial}')
+            data_final = requisicao.POST.get('data_final')
+            print(f' data final {data_final}')
+            tabela_total = Refeicao.objects.all()
+            print(f'tabela total = {tabela_total}')
+            refeicoes = Refeicao.objects.aggregate(Count('id_ref'))
+            tot_ref = refeicoes["id_ref__count"]
+
+            n = 0
+            eventos = []
+            horas = []
+            total_eventos = []
+
+            while n != tot_ref:
+
+                for tab in tabela_total:
+                    print('Este é o for do tab')
+                    id = tab.id_ref
+                    print(id)
+                    hi = tab.hora_inicio
+                    print(hi)
+                    hf = tab.hora_fim
+                    print(hf)
+                    horas += id, hi, hf
+                    tipo_ref = tab.nome
+                    valor = tab.valor
+                    print(f'estes são nomes e valores de refeicao = {tipo_ref}, {valor}')
+
+                    # pega todas as refeicoes
+                    idr = id
+                    refrr = []
+                    refeicao_12 = Refeicao.objects.filter(id_ref=idr)
+                    for refr in refeicao_12:
+                        ref_nome_12 = refr.nome
+                        ref_valor_12 = str(refr.valor)
+                        ref_hi = refr.hora_inicio
+                        ref_hf = refr.hora_fim
+                        refrr += ref_nome_12, ref_valor_12, ref_hi, ref_hf
+                        print(f'este é o refrr = {refrr}')
+                        print(f'este é o horario = {ref_hi} {ref_hf}')
+                        evento = Evento.objects.filter(data__range=(data_inicial, data_final)) \
+                            .filter(hora__range=(ref_hi, ref_hf))
+
+                        eventos += evento
+                        som_eventos = eventos, tipo_ref, valor
+                        print(f'este é o evento {evento}')
+                        total = len(evento)
+                        print(f'total de eventos = {total}')
+                        tot_t = total * float(ref_valor_12)
+
+                        total_eventos.append((ref_nome_12, f'{str(total)}', ref_valor_12, f'{tot_t:.2f}'))
+
+                    n += 1
+
+            print(f'este é o total eventos {total_eventos}')
+            eve_0 = total_eventos[0]
+            eve_1 = total_eventos[1]
+            eve_2 = total_eventos[2]
+            eve_3 = total_eventos[3]
+            eve_4 = total_eventos[4]
+
+            total_geral = float(eve_0[3]) + float(eve_1[3]) + float(eve_2[3]) + float(eve_3[3]) + float(eve_4[3])
+            tot_geral = (f'{total_geral:.2f}')
+
+            context= {
+                'eve_0': eve_0,
+                'eve_1': eve_1,
+                'eve_2': eve_2,
+                'eve_3': eve_3,
+                'eve_4': eve_4,
+                'tot_geral': tot_geral
+
+            }
+
+            return render(requisicao, template_name='website/home/relatorio/tot_refeicao/resultado.html',
+                          context=context)

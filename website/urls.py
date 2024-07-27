@@ -6,7 +6,7 @@ from website.api import viewsets as eventoviewset
 from website.api_func import viewsets as funcionarioviewset
 
 from website.views import (HomeViewer, cria_equipamento, cria_refeicao, cria_funcionario, cria_grupo_refeicao, cria_visitante, cria_busca, relatorio_refeicoes,
-                           monitoramento, tot_func)
+                           monitoramento, tot_func, tot_refeicao)
 
 
 app_name = 'website'
@@ -49,17 +49,14 @@ urlpatterns = [
     path('home/relatorio/refeicoes/', relatorio_refeicoes, name='refeicoes.html'),
 
     #Relatorio Tot_func
-    path('home/relatorio/tot_func/', tot_func, name='tot_func.html'),
+    path('home/relatorio/tot_func/', tot_func, name='tot_refeicao.html'),
 
+    # Relatorio Totalizado por Refeição
+    path('home/relatorio/tot_refeicao/', tot_refeicao, name='tot_refeicao.html'),
 
     #API
     path('', include(route.urls)),
     path('', include(route.urls))
-
-
-
-
-
 
 ]
 

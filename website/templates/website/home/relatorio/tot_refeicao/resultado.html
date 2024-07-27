@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h2>Evento de Refeições Totalizado por Funcionario</h2>
+<h2>Refeições Totalizado por Tipos de Refeicao</h2>
 
                     <table class="table table-hover" width="100%" border="1">
                         <colgroup>
@@ -25,7 +25,6 @@
                         </colgroup>
                         <thead>
                             <tr class="table-success">
-                                <td><b>Nome</b></td>
                                 <td><b>Tipo de Refeição</b></td>
                                 <td><b>Quantidade</b></td>
                                 <td><b>valor da Refeicao</b></td>
@@ -34,7 +33,7 @@
                         </thead>
                         <tbody>
 
-                            <tr class="table-warning">
+                              <tr class="table-warning">
                                 {% for e in eve_0 %}
                                      <td>{{ e }}</td>
                                 {% endfor %}
@@ -54,17 +53,17 @@
                                      <td>{{ e }}</td>
                                 {% endfor %}
                             </tr>
-                            <tr class="table-warning">
+                                  <tr class="table-warning">
                                 {% for e in eve_4 %}
                                      <td>{{ e }}</td>
                                 {% endfor %}
                             </tr>
-                            <tr class="table-warning">
+                             <tr class="table-warning">
                             <td>Total Geral</td>
                             <td> </td>
                             <td> </td>
-                            <td> </td>
                             <td> {{ tot_geral }} </td>
+
 
 
 

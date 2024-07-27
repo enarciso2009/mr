@@ -41,7 +41,7 @@
                                 <a class="dropdown-item" href="/home/relatorio/monitoramento/#">Monitoramento</a>
                                 <a class="dropdown-item" href="/home/relatorio/refeicoes/#">Relatório de Refeições</a>
                                 <a class="dropdown-item" href="#">Relatório totalizado por Funcionario</a>
-                                <a class="dropdown-item" href="#">Relatório totalizado por Refeição</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_refeicao/#">Relatório totalizado por Refeição</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -69,12 +69,19 @@
         </nav>
         <script src="{% static 'scripts.js' %}"></script>
 
-        <h1>Relatorio de Refeições</h1>
+        <h1>Relatorio de Refeições Totalizado por Funcionario</h1>
         <form method="post">
             {% csrf_token %}
 
-            <h3>Selecione o Funcionario</h3>
-            {{form.nome}}
+
+            <div class="col-md-3">
+                        <h3>Funcionario</h3>
+                        <select class="form-select" id="func" name="func" required value="func">
+                            {% for c in completo %}
+                              <option>{{c.nome}}</option>
+                            {%endfor%}
+                        </select>
+            </div>
 
             <h3> Selecione a data inicial</h3>
             <input type="date" id="form.data_inicio" name="data_inicio">

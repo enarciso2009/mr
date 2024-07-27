@@ -39,15 +39,16 @@
                         </thead>
                         <tbody>
 
-                                    {% for e in evento_cafe %}
+
+                                  {% for e in evento_cafe %}
                                     <tr class="table-warning">
                                         <td>{{ e.matricula }}</td>
                                         <td>{{ e.nome }}</td>
                                         <td>{{ e.data }}</td>
                                         <td>{{ e.hora }}</td>
-                                        <td>{{ e.equip_nome }}</td>
-                                        <td>Café</td>
-                                        <td>5,00</td>
+                                        <td>{{ e.equip_nome}}</td>
+                                        <td> {{ref_nome_1}} </td>
+                                        <td> {{ref_valor_1}} </td>
                                     </tr>
                                     {%endfor %}
 
@@ -58,11 +59,44 @@
                                         <td>{{ e.data }}</td>
                                         <td>{{ e.hora }}</td>
                                         <td>{{ e.equip_nome }}</td>
-                                        <td>Almoco</td>
-                                        <td>20,00</td>
+                                        <td> {{ref_nome_3}} </td>
+                                        <td> {{ref_valor_3}} </td>
                                     </tr>
                                     {%endfor %}
 
+                         {% for e in evento_cafe_tarde %}
+                                    <tr class="table-warning">
+                                        <td>{{ e.matricula }}</td>
+                                        <td>{{ e.nome }}</td>
+                                        <td>{{ e.data }}</td>
+                                        <td>{{ e.hora }}</td>
+                                        <td>{{ e.equip_nome }}</td>
+                                        <td> {{ref_nome_6}} </td>
+                                        <td> {{ref_valor_6}} </td>
+                                    </tr>
+                                    {%endfor %}
+                         {% for e in evento_jantar %}
+                                    <tr class="table-warning">
+                                        <td>{{ e.matricula }}</td>
+                                        <td>{{ e.nome }}</td>
+                                        <td>{{ e.data }}</td>
+                                        <td>{{ e.hora }}</td>
+                                        <td>{{ e.equip_nome }}</td>
+                                        <td> {{ref_nome_9}} </td>
+                                        <td> {{ref_valor_9}} </td>
+                                    </tr>
+                                    {%endfor %}
+                         {% for e in evento_ceia %}
+                                    <tr class="table-warning">
+                                        <td>{{ e.matricula }}</td>
+                                        <td>{{ e.nome }}</td>
+                                        <td>{{ e.data }}</td>
+                                        <td>{{ e.hora }}</td>
+                                        <td>{{ e.equip_nome }}</td>
+                                        <td> {{ref_nome_12}} </td>
+                                        <td> {{ref_valor_12}} </td>
+                                    </tr>
+                                    {%endfor %}
 
 
                         </tbody>
