@@ -23,21 +23,21 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" target="_self">Funcionário</a>
-                                <a class="dropdown-item" href="/home/visitante/#">Visitantes</a>
-                                <a class="dropdown-item" href="/home/equipamento">Equipamentos</a>
-                                <a class="dropdown-item" href="/home/refeicao/#">Refeições</a>
-                                <a class="dropdown-item" href="/home/grupo_refeicao/#">Grupos de Refeições</a>
+                                <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionário</a>
+                                <a class="dropdown-item" href="/home/visitante/#" target="_self">Visitantes</a>
+                                <a class="dropdown-item" href="/home/equipamento/#" target="_self">Equipamentos</a>
+                                <a class="dropdown-item" href="/home/refeicao/#" target="_self">Refeições</a>
+                                <a class="dropdown-item" href="/home/grupo_refeicao/#" target="_self">Grupos de Refeições</a>
 
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/home/relatorio/monitoramento/">Monitoramento</a>
-                                <a class="dropdown-item" href="/home/relatorio/refeicoes">Refeições</a>
-                                <a class="dropdown-item" href="/home/relatorio/tot_func">Totalizado por Funcionario</a>
-                                <a class="dropdown-item" href="/home/relatorio/tot_refeicao">Totalizado por Refeição</a>
+                                <a class="dropdown-item" href="/home/relatorio/monitoramento/#" target="_self">Monitoramento</a>
+                                <a class="dropdown-item" href="/home/relatorio/refeicoes/#" target="_self">Refeições</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_func/#" target="_self">Totalizado por Funcionario</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_refeicao/#" target="_self">Totalizado por Refeição</a>
 
                             </div>
                         </li>
@@ -46,20 +46,20 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Logins</a>
                                 <a class="dropdown-item" href="#">Permissões</a>
-                                <a class="dropdown-item" href="/home/configuracoes/modelos">Modelo Refeições</a>
+                                <a class="dropdown-item" href="#" target="_self">Modelo Refeições</a>
                                 <a class="dropdown-item" href="#">Créditos Refeições</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajuda</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="home/ajuda/sobre/#" target="_self">Sobre</a>
+                                <a class="dropdown-item" href="/home/ajuda/sobre/#" target="_self">Sobre</a>
                             </div>
                         </li>
                          <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sair</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/logout">Sair</a>
+                                <a class="dropdown-item" href="/logout" target="_self">Sair</a>
                             </div>
                         </li>
 
@@ -72,46 +72,40 @@
         <script src="{% static 'scripts.js' %}"></script>
 
         <form method="post">
+
             {% csrf_token %}
 
 
-            <legend>Cadastro de Funcionários</legend>
+            <legend>Modelo Refeicões</legend>
 
-                    <h1>Matricula</h1>
-                    {{ form.matricula }}
-                    <h4>Nome</h4>
-                    {{ form.nome }}
-                    <h4>Admissão</h4>
-                    {{ form.admissao }}
-                    <h4>Departamento</h4>
-                    {{ form.departamento }}
-                    <h4>Centro de Custo</h4>
-                    {{ form.centro_de_custo }}
-                    <h4>Cargo</h4>
-                    {{ form.cargo }}
-                    <h4>Documento</h4>
-                    {{ form.documento }}
-                    <h4>Credencial</h4>
-                    {{ form.credencial }}
-
-                    <div class="col-md-3">
-                    <h4>Grupo de Refeição</h4>
-                    <select class="form-select" id="grup_ref" nome ="grup_ref" required value={{form.grup_ref}}
-                            {% for g in grup_ref %}
-                              <option> {{g.nome}}</option>
-                            {%endfor%}
-                    </select>
+                 <fieldset>
+                    <legend class="mt-4">Parâmetros</legend>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="mod_padrao_usu" name="mod_padrao_usu">
+                        <label class="form-check-label" for="mod_padrao_usu">Apenas Contabilizar Refeições Usuários</label>
                     </div>
 
-                    <h4>Ativo</h4>
-                    {{ form.ativo }}
+                     <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="mod_padrao_visi" name="mod_padrao_visi">
+                        <label class="form-check-label" for="mod_padrao_visi">Apenas Contabilizar Refeições Visitantes</label>
+                    </div>
+
+
+                    <div class="form-check form-switch">
+                       <input class="form-check-input" type="checkbox" id="mod_credito_usu" name="mod_credito_usu">
+                       <label class="form-check-label" for="mod_credito_usu">Usar Credito de Refeições para Usuários</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="mod_credito_visi" name="mod_credito_visi">
+                        <label class="form-check-label" for="mod_credito_visi">Usar Credito de Refeições para Visitante</label>
+                    </div>
+                </fieldset>
                 <br>
                 <br>
 
-                <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
                 <button type="alterar" value="alterar" name="alterar" class="btn btn-outline-warning">Alterar</button>
-                <button type="excluir" value="excluir" name="excluir" class="btn btn-outline-danger">Excluir</button>
-                <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
-
+                <a href=""> <button type="submit" name="voltar" class="btn btn-link disable">Voltar</button></a>
+        </form>
     </body>
 </html>

@@ -1,12 +1,16 @@
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from website.api import viewsets as eventoviewset
 from website.api_func import viewsets as funcionarioviewset
+from django.contrib.auth import views as auth_views
+from . import views
+
 
 from website.views import (HomeViewer, cria_equipamento, cria_refeicao, cria_funcionario, cria_grupo_refeicao, cria_visitante, cria_busca, relatorio_refeicoes,
-                           monitoramento, tot_func, tot_refeicao)
+                           monitoramento, tot_func, tot_refeicao, sobre, modelo, MrLoginView, logout_view, MrDashboardView)
 
 
 app_name = 'website'
@@ -22,10 +26,18 @@ route.register(r'website/api_func', funcionarioviewset.FuncViewSet, basename='we
 # urlpatterns contem a lista de roteamentos de URLs
 urlpatterns = [
     #Home
-    path('home/', HomeViewer.as_view(), name='home.html'),
+    path('home/', HomeViewer.as_view(), name='home'),
+
+    # login
+
+    path('login/', MrLoginView.as_view(), name='login'),
+
+    path('logout/', logout_view, name='logout'),
+
+    path('home/dashboard/', MrDashboardView.as_view(), name='dashboard'),
 
     #Equipamento
-    path('home/equipamento/', cria_equipamento, name='equipamento.html'),
+    path('home/equipamento/', cria_equipamento, name='equipamento'),
 
     #Refeicao
     path('home/refeicao/', cria_refeicao, name='grupo_refeicao.html'),
@@ -53,6 +65,13 @@ urlpatterns = [
 
     # Relatorio Totalizado por Refeição
     path('home/relatorio/tot_refeicao/', tot_refeicao, name='tot_refeicao.html'),
+
+    # sobre
+    path('home/ajuda/sobre/', sobre, name='sobre.html'),
+
+    # configurações
+    path('home/configuracoes/modelos/', modelo, name='modelo.html'),
+
 
     #API
     path('', include(route.urls)),

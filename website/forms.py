@@ -1,5 +1,5 @@
 from django import forms
-from website.models import Equipamento, Refeicao, Funcionario, Grupo_Refeicao, Visitante, Evento
+from website.models import Equipamento, Refeicao, Funcionario, Grupo_Refeicao, Visitante, Evento, Parametro
 
 
 
@@ -53,4 +53,11 @@ class EventoForm(forms.ModelForm):
         model = Evento
         fields = [
             'id_evento', 'matricula', 'nome', 'data', 'hora', 'equip_id', 'equip_nome'
+        ]
+
+class ParametroForm(forms.ModelForm):
+    class Meta:
+        model = Parametro
+        fields = [
+            'id_param', 'nome', 'mod_padrao_usu', 'mod_credito_usu', 'mod_padrao_visi', 'mod_credito_visi'
         ]

@@ -35,9 +35,9 @@
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="relatorio/monitoramento">Monitoramento</a>
-                                <a class="dropdown-item" href="relatorio/refeicoes">Relatório de Refeições</a>
-                                <a class="dropdown-item" href="relatorio/tot_func">Relatório totalizado por Funcionario</a>
-                                <a class="dropdown-item" href="relatorio/tot_refeicao">Relatório totalizado por Refeição</a>
+                                <a class="dropdown-item" href="relatorio/refeicoes">Refeições</a>
+                                <a class="dropdown-item" href="relatorio/tot_func">Totalizado por Funcionario</a>
+                                <a class="dropdown-item" href="relatorio/tot_refeicao">Totalizado por Refeição</a>
 
                             </div>
                         </li>
@@ -45,17 +45,21 @@
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Logins</a>
-                                <a class="dropdown-item" href="#">permissões</a>
-                                <a class="dropdown-item" href="#">grupos de refeição</a>
+                                <a class="dropdown-item" href="#">Permissões</a>
+                                <a class="dropdown-item" href="configuracoes/modelos">Modelo Refeições</a>
+                                <a class="dropdown-item" href="configuracoes/modelos">Créditos Refeições</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sobre</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajuda</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Ajuda</a>
-                                <a class="dropdown-item" href="#">Sobre</a>
-                                
-                               
+                                <a class="dropdown-item" href="ajuda/sobre">Sobre</a>
+                            </div>
+                        </li>
+                         <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sair</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/logout">Sair</a>
                             </div>
                         </li>
                         
@@ -64,5 +68,6 @@
                 </div>
             </div>
             <script src="{% static 'scripts.js' %}"></script>
+        </nav>
     </body>
 </html>        

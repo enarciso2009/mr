@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-
 {% load static %}
-
 <html lang="pt-br">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="{% static 'refeicao.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
         <title>Módulo Refeitório</title>
@@ -15,10 +11,10 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
             <div class="container-fluid">
-              
-                <img src="{% static 'refeicao.png' %}" alt="" width="6%">
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" 
+
+                <img src="{% static 'refeicao.png'%}" alt="" width="6%">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
                         aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,45 +23,51 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionários</a>
+                                <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionário</a>
                                 <a class="dropdown-item" href="/home/visitante/#" target="_self">Visitantes</a>
-                                <a class="dropdown-item" href="/home/equipamento/#">Equipamentos</a>
-                                <a class="dropdown-item" href="/home/refeicao/#">Refeições</a>
-                                <a class="dropdown-item" href="/home/grupo_refeicao/#">Grupos de Refeições</a>
+                                <a class="dropdown-item" href="#" target="_self">Equipamentos</a>
+                                <a class="dropdown-item" href="/home/refeicao/#" target="_self">Refeições</a>
+                                <a class="dropdown-item" href="/home/grupo_refeicao/#" target="_self">Grupos de Refeições</a>
 
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/home/relatorio/monitoramento">Monitoramento</a>
-                                <a class="dropdown-item" href="/home/relatorio/refeicoes">Relatório de Refeições</a>
-                                <a class="dropdown-item" href="/home/relatorio/tot_func/#">Relatório totalizado por Funcionario</a>
-                                <a class="dropdown-item" href="/home/relatorio/tot_refeicao/#">Relatório totalizado por Refeição</a>
+                                <a class="dropdown-item" href="/home/relatorio/monitoramento/#" target="_self">Monitoramento</a>
+                                <a class="dropdown-item" href="/home/relatorio/refeicoes/#" target="_self">Refeições</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_func/#" target="_self">Totalizado por Funcionario</a>
+                                <a class="dropdown-item" href="/home/relatorio/tot_refeicao/#" target="_self">Totalizado por Refeição</a>
+
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Logins</a>
-                                <a class="dropdown-item" href="#">permissões</a>
-                                <a class="dropdown-item" href="#">grupos de refeição</a>
+                                <a class="dropdown-item" href="#">Permissões</a>
+                                <a class="dropdown-item" href="/home/configuracoes/modelos/#" target="_self">Modelo Refeições</a>
+                                <a class="dropdown-item" href="#">Créditos Refeições</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sobre</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajuda</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Ajuda</a>
-                                <a class="dropdown-item" href="#">Sobre</a>
-                                
-                               
+                                <a class="dropdown-item" href="/home/ajuda/sobre/#" target="_self">Sobre</a>
                             </div>
                         </li>
-                        
-                          
+                         <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sair</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/logout"target="_self">Sair</a>
+                            </div>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
+
         </nav>
         <script src="{% static 'scripts.js' %}"></script>
 

@@ -1,12 +1,37 @@
 import datetime
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+# validação de usuarios
+
+from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpRequest, HttpResponseRedirect, Http404, HttpResponse
 from django.db.models import Sum, Count, Max, Min
 
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
 import datetime
-from website.forms import EquipamentoForm, RefeicaoForm, FuncionarioForm, Grupo_RefeicaoForm, VisitanteForm, BuscaForm, EventoForm
-from website.models import Equipamento, Refeicao, Funcionario, Grupo_Refeicao, Inter_grup_ref, Visitante, Evento
+from website.forms import EquipamentoForm, RefeicaoForm, FuncionarioForm, Grupo_RefeicaoForm, VisitanteForm, BuscaForm, EventoForm, ParametroForm
+from website.models import Equipamento, Refeicao, Funcionario, Grupo_Refeicao, Inter_grup_ref, Visitante, Evento, Parametro
+
+# criação de logins
+
+class MrLoginView(LoginView):
+    template_name = 'website/login.html'
+    success_url = reverse_lazy('home:home')
+    redirect_authenticated_user = True
+
+def logout_view(requisicao):
+    logout(requisicao)
+    return redirect('/login')
+
+class MrDashboardView(TemplateView):
+    template_name = '/website/home/home.html'
+
+
 class HomeViewer(TemplateView):
     template_name = 'website/home/home.html'
 
@@ -14,6 +39,7 @@ class HomeViewer(TemplateView):
 status = ''
 
 # Tela de Cadastro de Equipamentos
+@login_required
 def cria_equipamento(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -74,6 +100,7 @@ def cria_equipamento(requisicao: HttpRequest):
                           context={'equipamento': equipamento})
 
 # Tela de cadastro de Refeições
+@login_required
 def cria_refeicao(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -132,8 +159,8 @@ def cria_refeicao(requisicao: HttpRequest):
             refeicao = Refeicao.objects.all()
             return render(requisicao, template_name='website/home/refeicao/salvo.html',
                           context={'refeicao': refeicao})
-
 # Cadastro de Funcionarios
+@login_required
 def cria_funcionario(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -195,6 +222,7 @@ def cria_funcionario(requisicao: HttpRequest):
 
 
 # Cadastro de Visitantes
+@login_required
 def cria_visitante(requisicao: HttpRequest):
     if requisicao.method == 'GET':
         print(requisicao.GET)
@@ -328,7 +356,7 @@ def cria_visitante(requisicao: HttpRequest):
 
 
 # cadastro de Grupo de Refeicao
-
+@login_required
 def cria_grupo_refeicao(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -466,6 +494,7 @@ def cria_grupo_refeicao(requisicao: HttpRequest):
             return render(requisicao, template_name='website/home/grupo_refeicao/salvo.html',
                           context=context)
 
+@login_required
 def cria_busca(requisicao: HttpRequest):
     # print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -485,7 +514,7 @@ def cria_busca(requisicao: HttpRequest):
 # Relatorios
 
 # monitoramento
-
+@login_required
 def monitoramento(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -503,7 +532,7 @@ def monitoramento(requisicao: HttpRequest):
 
 
 # Relatorio de Refeições
-
+@login_required
 def relatorio_refeicoes(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -633,6 +662,7 @@ def relatorio_refeicoes(requisicao: HttpRequest):
                       context=context)
 
 # Relatorio refeições totalizado por funcionario
+@login_required
 def tot_func(requisicao: HttpRequest):
     #print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -763,7 +793,7 @@ def tot_func(requisicao: HttpRequest):
 
 
 # Relatorios Refeições Totalizadas
-
+@login_required
 def tot_refeicao(requisicao: HttpRequest):
     print(f"este é o GET = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
@@ -858,3 +888,77 @@ def tot_refeicao(requisicao: HttpRequest):
 
             return render(requisicao, template_name='website/home/relatorio/tot_refeicao/resultado.html',
                           context=context)
+
+# Sobre
+@login_required
+def sobre(requisicao: HttpRequest):
+    print(f"este é o GET = {requisicao.method == 'GET'}")
+    if requisicao.method == 'GET':
+        print(f'entrou no if do get')
+        return render(requisicao, template_name='website/home/ajuda/sobre/sobre.html')
+
+# Configurações
+
+# Modelo de Refeições
+@login_required
+def modelo(requisicao: HttpRequest):
+    print(f"este é o Get do Modelo = {requisicao.method == 'GET'}")
+    if requisicao.method == 'GET':
+        print(f'entrou no if do get')
+        return render(requisicao, template_name='website/home/configuracoes/modelos/modelo.html')
+
+    elif requisicao.method == 'POST':
+        print('entrou no post')
+        print(f'este é o post = {requisicao.method == "POST"}')
+        form = ParametroForm(requisicao.POST)
+        req = requisicao.POST
+        for r in req.values():
+            status = r
+        print(f'este é o status =  {status}')
+
+
+        mod_padrao_usu = None
+        mod_padrao_visi = None
+        mod_credito_usu = None
+        mod_credito_visit = None
+
+
+        if status == 'alterar':
+            print('entrou no consultar')
+            print(f'este é o post consulta {requisicao.POST}')
+
+            post = requisicao.POST
+            for p in post:
+                if post['mod_padrao_usu']:
+                    mod_padrao_usu = (post['mod_padrao_usu'])
+                    print(f'imprimiu daqui = {mod_padrao_usu}')
+                else:
+                    mod_padrao_usu = 'off'
+                    print(mod_padrao_usu)
+
+                if post["mod_padrao_visi"]:
+                    mod_padrao_visi = (post['mod_padrao_visi'])
+                    print(mod_padrao_visi)
+                else:
+                    mod_padrao_visi = 'off'
+                    print(mod_padrao_visi)
+
+                if post['mod_credito_usu']:
+                    mod_credito_usu = (post['mod_credito_usu'])
+                    print(mod_credito_usu)
+                else:
+                    mod_credito_usu = 'off'
+                    print(mod_credito_usu)
+
+                if post['mod_credito_visi']:
+                    mod_credito_visi = (post['mod_credito_visi'])
+                    print(mod_credito_visi)
+                else:
+                    mod_credito_visi = 'off'
+                    print(mod_credito_visi)
+
+
+            return render(requisicao, template_name='website/home/configuracoes/modelos/modelo.html')
+
+
+
