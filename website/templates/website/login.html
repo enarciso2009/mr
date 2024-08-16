@@ -4,17 +4,32 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'myconf.css' %}">
+        <!--<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}"> -->
         <title>Módulo Refeitório</title>
     </head>
 <body>
-    <form method="post">
+    <form method="post" class="login" name="login">
         {% csrf_token %}
+        <section class="boxLogin container"></section>
+        <div class="padding">
+         <table class="tabela">
 
-        {{ form }}
+                 <tr>
+                 <h1>Sistema MR - Login</h1>
+             </tr>
+             <tr>
 
-        <button type="submit">Fazer login</button>
+                 <input class="form-control" type="text" name="username" placeholder="Usuário">
+             </tr>
+             <tr>
+
+                 <input class="form-control" type="password" name="password" placeholder="Senha">
+             </tr>
+         </table>
+            <input type="submit" value="Login" class="btn"/>
+
+        </div>
     </form>
 </body>
 </html>
