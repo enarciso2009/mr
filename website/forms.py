@@ -55,9 +55,11 @@ class EventoForm(forms.ModelForm):
             'id_evento', 'matricula', 'nome', 'data', 'hora', 'equip_id', 'equip_nome'
         ]
 
+
 class ParametroForm(forms.ModelForm):
     class Meta:
         model = Parametro
         fields = [
-            'id_param', 'nome', 'mod_padrao_usu', 'mod_credito_usu', 'mod_padrao_visi', 'mod_credito_visi'
+            'id_param', 'nome', 'mod_padrao_usu', 'mod_credito_usu', 'mod_padrao_visi', 'mod_credito_visi',
         ]
+

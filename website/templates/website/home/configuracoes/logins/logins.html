@@ -26,7 +26,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="/home/funcionario/#" target="_self">Funcionário</a>
                                 <a class="dropdown-item" href="/home/visitante/#" target="_self">Visitantes</a>
-                                <a class="dropdown-item" href="#" target="_self">Equipamentos</a>
+                                <a class="dropdown-item" href="/home/equipamento/#" target="_self">Equipamentos</a>
                                 <a class="dropdown-item" href="/home/refeicao/#" target="_self">Refeições</a>
                                 <a class="dropdown-item" href="/home/grupo_refeicao/#" target="_self">Grupos de Refeições</a>
 
@@ -73,45 +73,47 @@
         <script src="{% static 'scripts.js' %}"></script>
 
 
-        <form method="post" class="equipamento" name="equipamento">
-            <section class="boxLogin container"></section>
-            <div class="padding" style="text-align: center;">
-            <table class="tabela">
-            <h1 class="equip_h1">Cadastro de Equipamentos</h1>
+        <form method="post" class="logins" name="logins">
+
             {% csrf_token %}
-            <section class="boxequip container"></section>
-                <div class="equip_div" >
-                <tr style="text-align: center;">
 
-                    <td class="equip_td" name="equip_td">
-                    <input class="form-control" type="text" name="id_equip" maxlength="100" id="id_id_equip" placeholder="Id">
+            <h1 style=" font-size: 4.5rem; text-align: center; padding-top: 3rem;">Cadastro de logins</h1>
+
+            <table style="text-align:center; font-family:'open_sansregular'; font-size:2.5em; padding:0.5em; background-color: var(--bs-body-bg); color:black; margin: auto;">
+                <tr>
+                    <td>
+                    <input class="form-control" type="text" name="first_name" maxlength="100" id="first_name" placeholder="Nome" style="text-align: center; padding:1.2rem 11.5rem">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="form-control" type="text" name="nome" maxlength="100" id="id_nome" placeholder="Nome">
+                        <input class="form-control" type="text" name="last_name" maxlength="100" id="last_name" placeholder="Sobrenome" style="text-align: center; padding:1.2rem 11.5rem">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="form-control" type="text" name="ip" maxlength="15" id="id_ip" placeholder="IP">
+                        <input class="form-control" type="text" name="username" maxlength="100" id="username" placeholder="Login" style="text-align: center; padding:1.2rem 11.5rem">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="form-control" type="text" name="mask" maxlength="100" id="id_mask" placeholder="Mask">
+                        <input class="form-control" type="password" name="password" maxlength="100" id="password" placeholder="Password"  style= "text-align: center; padding:1.2rem 11.5rem; text-color: red;">
                     </td>
                 </tr>
-                </div>
+                <tr>
+                    <td>
+                        <input class="form-control" type="email" name="email" maxlength="100" id="email" placeholder="e-mail" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 4rem">
+                        <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
+                        <button type="alterar" value="alterar" name="alterar" class="btn btn-outline-warning">Alterar</button>
+                        <button type="excluir" value="excluir" name="excluir" class="btn btn-outline-danger">Excluir</button>
+                        <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm" style="padding: 0.8rem 1.2rem; font-size:1.1rem;">Consultar</button>
+                    </td>
+                </tr>
             </table>
-
-            <br>
-            <br>
-            <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
-            <button type="alterar" value="alterar" name="alterar" class="btn btn-outline-warning">Alterar</button>
-            <button type="excluir" value="excluir" name="excluir" class="btn btn-outline-danger">Excluir</button>
-            <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
-            </div>
         </form>
     </body>
-</html>
+</html>>

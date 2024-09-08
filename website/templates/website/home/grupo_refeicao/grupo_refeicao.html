@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'myconf.css' %}">
         <title>Módulo Refeitório</title>
     </head>
     <body>
@@ -44,7 +45,7 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Logins</a>
+                                <a class="dropdown-item" href="/home/configuracoes/logins/#">Logins</a>
                                 <a class="dropdown-item" href="#">Permissões</a>
                                 <a class="dropdown-item" href="/home/configuracoes/modelos/#" target="_self">Modelo Refeições</a>
                                 <a class="dropdown-item" href="#">Créditos Refeições</a>
@@ -71,33 +72,52 @@
 
         <script src="{% static 'scripts.js' %}"></script>
 
-        <h1>Cadastro de Grupo de Refeição</h1>
-        <form method="post">
+        <form method="post" class="grupo_ref" name="grupo_ref">
+            <section class="boxGrupoRefeicao container"></section>
+            <div class="padding" style="text-align: center;">
+            <table class="tabela_grupo_ref">
+            <h1 class="refeicao_h1">Cadastro de Grupo de Refeições</h1>
             {% csrf_token %}
+            <section class="boxGrupoRefeicao container"></section>
+                <div class="grupo_refeicao_div" >
+                <tr style="text-align: center;">
+                    <td>
+                        <input class="form-control" name="id_grup_ref" maxlength="10" id="id_grup_ref" placeholder="Id" style="padding:1.5rem 11.5rem; text-align: center;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" name="nome" maxlength="100" id="nome" placeholder="Nome" style="padding:1.5rem 11.5rem; text-align: center;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input">
+                        <input type="hidden" readonly id="form.ref" name="ref" value="1" required>
+                        </div>
+                    </td>
+                </tr>
+                 <tr>
+                     <td>
+                         <h5 class="grupo_ref_h5">Tipos de Refeição</h5>
+                     </td>
+                 </tr>
+                <tr>
+                    <td>
 
-            <h3>ID</h3>
-            {{ form.id_grup_ref }}
-            <h3>Nome</h3>
-            {{ form.nome }}
-            <div class="input">
-                <input type="hidden" readonly id="form.ref" name="ref" value="1" required>
-            </div>
+                        <select multiple="" class="form-select" id="tipos_refeicao" nome ="tipos_refeicao" required value={{form.ref}}
+                               {% for g in refeicao %}
+                                    <option> {{g.nome}} </option>
+                               {%endfor%}
+                        </select>
+
+                    </td>
+                </tr>
             <br>
             <br>
-            <h3>Tipos de Refeições</h3>
-        <!--    <div>
-                <select multiple="" class="form-select" id="exampleSelect2", name="tipos_refeicao">
-                    {% for r in form.ref %}
-                    <option>{{r}}</option>
-                    {% endfor %}
-                </select>
-    </div> -->
-             <select multiple="" class="form-select" id="tipos_refeicao" nome ="tipos_refeicao" required value={{form.ref}}
-                            {% for g in refeicao %}
-                              <option> {{g}}</option>
-                            {%endfor%}
-                    </select>
-                    </div>
+                </div>
+            </table>
+
             <br>
             <br>
             <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>

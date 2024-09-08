@@ -1,4 +1,6 @@
 from django.db import models
+from pkg_resources import require
+
 
 class Funcionario(models.Model):
     matricula = models.CharField(max_length=15, null=False, blank=False)
@@ -89,13 +91,14 @@ class Usuario(models.Model):
     permissao = models.CharField(max_length=50, null=True, blank=True)
     object = None
 
+
 class Parametro(models.Model):
     id_param = models.CharField(max_length=15, null=False, blank=False)
     nome = models.CharField(max_length=100, null=True, blank=True)
-    mod_padrao_usu = models.BooleanField(null=True, blank=True)
-    mod_credito_usu = models.BooleanField(null=True, blank=True)
-    mod_padrao_visi = models.BooleanField(null=True, blank=True)
-    mod_credito_visi = models.BooleanField(null=True, blank=True)
+    mod_padrao_usu = models.BooleanField(default=False)
+    mod_credito_usu = models.BooleanField(default=False)
+    mod_padrao_visi = models.BooleanField(default=False)
+    mod_credito_visi = models.BooleanField(default=False)
     object = None
     def __str__(self):
         return f'{self.id_param} {self.nome} {self.mod_padrao_usu} {self.mod_credito_usu} {self.mod_padrao_visi} {self.mod_credito_visi}'

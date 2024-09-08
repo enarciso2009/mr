@@ -5,8 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'myconf.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'myconf.css' %}">
+
         <title>Módulo Refeitório</title>
     </head>
     <body>
@@ -45,7 +46,7 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Logins</a>
+                                <a class="dropdown-item" href="/home/configuracoes/logins/#">Logins</a>
                                 <a class="dropdown-item" href="#">Permissões</a>
                                 <a class="dropdown-item" href="/home/configuracoes/modelos">Modelo Refeições</a>
                                 <a class="dropdown-item" href="#">Créditos Refeições</a>
@@ -72,48 +73,90 @@
 
         <script src="{% static 'scripts.js' %}"></script>
 
-        <form method="post">
+         <form method="post" class="funcionario" name="func">
+            <section class="boxLogin container"></section>
+            <div class="padding" style="text-align: center;">
+
+            <h1 class="func_h1" style=" font-size: 4.5rem; text-align: center; padding-top: 3rem;">Cadastro de Funcionarios</h1>
             {% csrf_token %}
+            <table style="text-align:center; font-family:'open_sansregular'; font-size:2.5em; padding:0.5em; background-color: var(--bs-body-bg); color:black; margin: auto;">
 
+            <section class="boxeLogin container"></section>
+                <div class="func_div" >
+                <tr>
+                    <td class="func_td" name="func_td">
+                         <input class="form-control" type="text" name="matricula" maxlength="15" id="id_matricula" placeholder="Id" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="nome" maxlength="100" id="nome" placeholder="Nome" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="date" name="admissao" id="id_admissao" placeholder="Data Admissão" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <input class="form-control" type="text" name="departamento" maxlength="100" id="departamento" placeholder="Departamento" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="centro_de_custo" maxlength="100" id="centro_de_custo" placeholder="Centro de Custo" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="cargo" maxlength="50" id="cargo" placeholder="Cargo" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="documento" maxlength="50" id="documento" placeholder="Documento" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="credencial" maxlength="50" id="credencial" placeholder="Credencial" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                    <tr>
+                        <td>
+                            <h5>Grupo de Refeições</h5>
+                        </td>
+                    </tr>
+                <tr>
+                    <td>
+                        <div>
+                          <select class="form-select" style="text-align: center; padding:1.2rem 11.5rem" id="grup_ref" nome ="grup_ref" required value={{form.grup_ref}}
+                                {% for g in grup_ref %}
+                                    <option> {{g.nome}}</option>
+                                {%endfor%}
+                          </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="ativo" maxlength="50" id="ativo" placeholder="Ativo" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                </div>
 
-            <legend>Cadastro de Funcionários</legend>
-                    <def class="funcionario">
-                    <h1>Matricula</h1>
-                    {{ form.matricula }}
-                    <h4>Nome</h4>
-                    {{ form.nome }}
-                    <h4>Admissão</h4>
-                    {{ form.admissao }}
-                    <h4>Departamento</h4>
-                    {{ form.departamento }}
-                    <h4>Centro de Custo</h4>
-                    {{ form.centro_de_custo }}
-                    <h4>Cargo</h4>
-                    {{ form.cargo }}
-                    <h4>Documento</h4>
-                    {{ form.documento }}
-                    <h4>Credencial</h4>
-                    {{ form.credencial }}
+            </table>
 
-                    <div class="col-md-3">
-                    <h4>Grupo de Refeição</h4>
-                    <select class="form-select" id="grup_ref" nome ="grup_ref" required value={{form.grup_ref}}
-                            {% for g in grup_ref %}
-                              <option> {{g.nome}}</option>
-                            {%endfor%}
-                    </select>
-                    </div>
-
-                    <h4>Ativo</h4>
-                    {{ form.ativo }}
-                    </def>
-                <br>
-                <br>
+            <br>
+            <br>
 
                 <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
                 <button type="alterar" value="alterar" name="alterar" class="btn btn-outline-warning">Alterar</button>
                 <button type="excluir" value="excluir" name="excluir" class="btn btn-outline-danger">Excluir</button>
                 <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
 
+            </div>
+         </form>
     </body>
 </html>

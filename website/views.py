@@ -1,5 +1,9 @@
 import datetime
+from re import purge
+from statistics import pvariance
+from xml.dom import NoModificationAllowedErr
 
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 # validação de usuarios
@@ -132,8 +136,9 @@ def cria_refeicao(requisicao: HttpRequest):
 
         if status == 'alterar':
             print('entrou no alterar')
-            id = requisicao.POST['id']
-            refeicao = Refeicao.objects.get(id=id)
+            print(requisicao.POST)
+            id_ref = requisicao.POST['id_ref']
+            refeicao = Refeicao.objects.get(id_ref=id_ref)
             refeicao = RefeicaoForm(requisicao.POST, instance=refeicao)
             refeicao.save()
             refeicao = Refeicao.objects.all()
@@ -144,10 +149,10 @@ def cria_refeicao(requisicao: HttpRequest):
         if status == 'excluir':
             print('entrou no excluir ')
             print(f"este é a requisicao.POST = {requisicao.POST}")
-            id = requisicao.POST['id']
-            id_int = int(id)
+            id_ref = requisicao.POST['id_ref']
+            id_int = int(id_ref)
             print(f'este é o id = {id_int}')
-            refeicao = Refeicao.objects.get(id=id_int)
+            refeicao = Refeicao.objects.get(id_ref=id_int)
             print(f'exemplo da apostila {refeicao}')
             refeicao.delete()
             refeicao = Refeicao.objects.all()
@@ -459,6 +464,7 @@ def cria_grupo_refeicao(requisicao: HttpRequest):
 
         if status == 'consultar':
             print('entrou no consultar')
+            print(requisicao.POST)
             id_grup_ref = requisicao.POST.get('id_grup_ref')
             print(f'este é o id {id_grup_ref}')
             grupo_refeicao = Grupo_Refeicao.objects.filter(id_grup_ref=id_grup_ref)
@@ -899,6 +905,7 @@ def sobre(requisicao: HttpRequest):
 
 # Configurações
 
+
 # Modelo de Refeições
 @login_required
 def modelo(requisicao: HttpRequest):
@@ -911,54 +918,123 @@ def modelo(requisicao: HttpRequest):
         print('entrou no post')
         print(f'este é o post = {requisicao.method == "POST"}')
         form = ParametroForm(requisicao.POST)
+
+        print(form)
         req = requisicao.POST
         for r in req.values():
             status = r
         print(f'este é o status =  {status}')
 
 
-        mod_padrao_usu = None
-        mod_padrao_visi = None
-        mod_credito_usu = None
-        mod_credito_visit = None
+        if status == 'incluir':
+            print('entrou no incluir')
+            print(f'este é o post incluir {requisicao.POST}')
 
+            if form.is_valid():
+                print(f'entrou no form.is_valid()')
+
+                padrao_usu = form.cleaned_data.get('mod_padrao_usu', False)
+                padrao_visi = form.cleaned_data.get('mod_padrao_visi', False)
+                credito_usu = form.cleaned_data.get('mod_credito_usu', False)
+                credito_visi = form.cleaned_data.get('mod_credito_usu', False)
+                id_param = requisicao.POST['id_param']
+                nome = requisicao.POST['nome']
+
+                print(f'estes sao os campos acima = {id_param, nome, padrao_usu, padrao_visi, credito_usu, credito_visi}')
+
+
+
+                parametro = Parametro(id_param, id_param, nome, padrao_usu, padrao_visi, credito_usu, credito_visi)
+                parametro.save()
+                parametro = Parametro.objects.all()
+
+                print(f'este é o parametro = {parametro}')
+                context = {
+                    'parametro': parametro
+
+                }
+
+                return render(requisicao, template_name='website/home/configuracoes/modelos/salvo.html', context=context)
+
+
+@login_required
+def cria_usuario(requisicao: HttpRequest):
+    if requisicao.method == 'GET':
+        print(f'entrou no if do get usuario')
+
+        return render(requisicao, template_name='website/home/configuracoes/logins/logins.html')
+    # Verifique se a requisição é POST
+    elif requisicao.method == 'POST':
+        print('entrou no post')
+        print(f'este é o post = {requisicao.method == "POST"}')
+        form = ParametroForm(requisicao.POST)
+        req = requisicao.POST
+        for r in req.values():
+            status = r
+        print(f'este é o status =  {status}')
+
+        if status == 'incluir':
+            username = requisicao.POST['username']
+            password = requisicao.POST['password']
+            email = requisicao.POST.get('email', '')
+
+            # Crie o usuário
+            user = User.objects.create_user(username=username, password=password, email=email)
+
+            # Adicione informações adicionais
+            user.first_name = requisicao.POST.get('first_name', '')
+            user.last_name = requisicao.POST.get('last_name', '')
+            user.save()
+
+            logins = User.objects.all()
+
+            context = {
+                'logins': logins
+            }
+
+            return render(requisicao, template_name='website/home/configuracoes/logins/salvo.html', context=context)
 
         if status == 'alterar':
+            print('entrou no alterar')
+            username = requisicao.POST['username']
+            nova_senha = requisicao.POST['password']
+            user = User.objects.get(username=username)
+            user.set_password(nova_senha)
+            user.save()
+
+
+            logins = User.objects.all()
+
+            context = {
+                'logins': logins
+            }
+
+            return render(requisicao, template_name='website/home/configuracoes/logins/alterado.html', context=context)
+
+        if status == 'excluir':
+            print('entrou no excluir')
+            username = requisicao.POST['username']
+            user = User.objects.get(username=username)
+            user.delete()
+
+
+            logins = User.objects.all()
+            context = {
+                'logins': logins
+            }
+
+            return render(requisicao, template_name='website/home/configuracoes/logins/excluido.html', context=context)
+
+        if status == 'consultar':
             print('entrou no consultar')
-            print(f'este é o post consulta {requisicao.POST}')
 
-            post = requisicao.POST
-            for p in post:
-                if post['mod_padrao_usu']:
-                    mod_padrao_usu = (post['mod_padrao_usu'])
-                    print(f'imprimiu daqui = {mod_padrao_usu}')
-                else:
-                    mod_padrao_usu = 'off'
-                    print(mod_padrao_usu)
+            logins = User.objects.all()
+            context = {
+                'logins': logins
+            }
 
-                if post["mod_padrao_visi"]:
-                    mod_padrao_visi = (post['mod_padrao_visi'])
-                    print(mod_padrao_visi)
-                else:
-                    mod_padrao_visi = 'off'
-                    print(mod_padrao_visi)
+            return render(requisicao, template_name='website/home/configuracoes/logins/salvo.html', context=context)
 
-                if post['mod_credito_usu']:
-                    mod_credito_usu = (post['mod_credito_usu'])
-                    print(mod_credito_usu)
-                else:
-                    mod_credito_usu = 'off'
-                    print(mod_credito_usu)
-
-                if post['mod_credito_visi']:
-                    mod_credito_visi = (post['mod_credito_visi'])
-                    print(mod_credito_visi)
-                else:
-                    mod_credito_visi = 'off'
-                    print(mod_credito_visi)
-
-
-            return render(requisicao, template_name='website/home/configuracoes/modelos/modelo.html')
 
 
 

@@ -10,7 +10,7 @@ from . import views
 
 
 from website.views import (HomeViewer, cria_equipamento, cria_refeicao, cria_funcionario, cria_grupo_refeicao, cria_visitante, cria_busca, relatorio_refeicoes,
-                           monitoramento, tot_func, tot_refeicao, sobre, modelo, MrLoginView, logout_view, MrDashboardView)
+                           monitoramento, tot_func, tot_refeicao, sobre, modelo, MrLoginView, logout_view, MrDashboardView, cria_usuario)
 
 
 app_name = 'website'
@@ -71,6 +71,9 @@ urlpatterns = [
 
     # configurações
     path('home/configuracoes/modelos/', modelo, name='modelo.html'),
+
+    #logins
+    path('home/configuracoes/logins/', cria_usuario, name='logins.html'),
 
 
     #API

@@ -44,7 +44,7 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Logins</a>
+                                <a class="dropdown-item" href="/home/configuracoes/logins/#">Logins</a>
                                 <a class="dropdown-item" href="#">Permissões</a>
                                 <a class="dropdown-item" href="/home/configuracoes/modelos/#" target="_self">Modelo Refeições</a>
                                 <a class="dropdown-item" href="#">Créditos Refeições</a>
@@ -71,32 +71,55 @@
 
         <script src="{% static 'scripts.js' %}"></script>
 
-        <h1>Relatorio de Refeições Totalizado por Funcionario</h1>
+        <h1 style="font-size: 3.5rem; text-align: center; padding-top: 4rem;">Relatório de Refeições Totalizado por Funcionário</h1>
         <form method="post">
             {% csrf_token %}
 
 
-            <div class="col-md-3">
-                        <h3>Funcionario</h3>
+            <table style=" text-align:center; font-family:'open_sansregular'; font-size:2.5em; padding:0.5em; background-color: var(--bs-body-bg); color:black; margin: auto;">
+
+                <tr>
+                    <td style="padding-top: 4.5rem">
+                        <h3>Funcionário</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <select class="form-select" id="func" name="func" required value="func">
                             {% for c in completo %}
                               <option>{{c.nome}}</option>
                             {%endfor%}
                         </select>
-            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 4.5rem">
+                        <h3>Data Inicial</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <input class="form-control" type="date" id="form.data_inicio" name="data_inicio" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 4.5rem">
+                        <h3>Data Final</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <input class="form-control" type="date" id="form.data_final" name="data_final" style="text-align: center; padding:1.2rem 11.5rem">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 4.5rem">
+                         <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm" style="padding:1.2rem 4.5rem; font-size: 1.5rem">Consultar</button>
+                    </td>
+                </tr>
 
-            <h3> Selecione a data inicial</h3>
-            <input type="date" id="form.data_inicio" name="data_inicio">
 
-                <h3>Selecione a data final</h3>
-            <input type="date" id="form.data_final" name="data_final">
-
-
-
-
-            <br>
-            <br>
-            <button type="consulta" value="consultar" name="consultar" class="btn btn-primary btn-sm">Consultar</button>
+            </table>
         </form>
     </body>
 </html>

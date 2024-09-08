@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'myconf.css' %}">
         <title>Módulo Refeitório</title>
     </head>
     <body>
@@ -44,7 +45,7 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Logins</a>
+                                <a class="dropdown-item" href="/home/configuracoes/logins/#">Logins</a>
                                 <a class="dropdown-item" href="#">Permissões</a>
                                 <a class="dropdown-item" href="/home/configuracoes/modelos/#" target="_self">Modelo Refeições</a>
                                 <a class="dropdown-item" href="#">Créditos Refeições</a>
@@ -71,23 +72,60 @@
 
         <script src="{% static 'scripts.js' %}"></script>
 
-        <h1>Cadastro de Refeições</h1>
-        <form method="post">
+        <form method="post" class="refeicao" name="refeicao">
+            <section class="boxRefeicao container"></section>
+            <div class="padding" style="text-align: center;">
+            <table class="tabela_ref">
+            <h1 class="refeicao_h1">Cadastro de Refeições</h1>
             {% csrf_token %}
-                <h3>ID</h3>
-                {{ form.id_ref }}
-                <h3>Nome</h3>
-                {{ form.nome }}
-                <h3>Valor</h3>
-                {{ form.valor }}
-                <h3>Data Inicio</h3>
-                {{ form.data_inicio}}
-                <h3>Hora Inicio</h3>
-                {{ form.hora_inicio}}
-                <h3>Data Final</h3>
-                {{ form.data_fim}}
-                <h3>Hora Final</h3>
-                {{ form.hora_fim}}
+            <section class="boxRefeicao container"></section>
+                <div class="refeicao_div" >
+                <tr style="text-align: center;">
+                   <td>
+                       <input class="form-control" type="text" name="id_ref" maxlength="10" id="id_ref" placeholder="Id">
+                   </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="nome" maxlength="100" id="nome" placeholder="Nome">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="number" name="valor" step="0.01" id="valor" placeholder="Valor">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="date" name="data_inicio" id="data_inicio" placeholder="Data Inicio">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="time" name="hora_inicio" id="hora_inicio" placeholder="Hora Inicio">
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <input class="form-control" type="date" name="data_fim" id="data_fim" placeholder="Data Final">
+                    </td>
+                </tr>
+                  <tr>
+                    <td>
+                        <input class="form-control" type="time" name="hora_fim" id="hora_fim" placeholder="Hora Final">
+                    </td>
+                </tr>
+                </div>
+                </table>
+
+
+
+
+
+
+
+
+
             <br>
             <br>
             <button type="incluir" value="incluir" name="incluir" class="btn btn-outline-success">Incluir</button>
