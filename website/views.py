@@ -912,12 +912,20 @@ def modelo(requisicao: HttpRequest):
     print(f"este é o Get do Modelo = {requisicao.method == 'GET'}")
     if requisicao.method == 'GET':
         print(f'entrou no if do get')
-        return render(requisicao, template_name='website/home/configuracoes/modelos/modelo.html')
+        parametro = Parametro.objects.all()
+
+        print(f'este é o parametro do get = {parametro}')
+        context = {
+            'parametro': parametro
+        }
+        return render(requisicao, template_name='website/home/configuracoes/modelos/salvo.html', context=context)
 
     elif requisicao.method == 'POST':
         print('entrou no post')
         print(f'este é o post = {requisicao.method == "POST"}')
         form = ParametroForm(requisicao.POST)
+
+
 
         print(form)
         req = requisicao.POST
@@ -956,6 +964,39 @@ def modelo(requisicao: HttpRequest):
 
                 return render(requisicao, template_name='website/home/configuracoes/modelos/salvo.html', context=context)
 
+        if status == 'alterar':
+            print('Entrou no Alterar')
+
+
+
+            parametro = Parametro.objects.all()
+
+            for p in parametro:
+                id = p.id_param
+
+            print(f'consegui separar o id = {id}')
+            print(f'este é o parametro = {parametro}')
+
+            context = {
+                'parametro': parametro
+            }
+
+            return render(requisicao, template_name='website/home/configuracoes/modelos/salvo.html', context=context)
+
+
+        if status == 'consultar':
+            print('Entrou no Alterar')
+
+
+            parametro = Parametro.objects.all()
+
+            print(f'este é o parametro = {parametro}')
+
+            context = {
+                'parametro': parametro
+            }
+
+            return render(requisicao, template_name='website/home/configuracoes/modelos/salvo.html', context=context)
 
 @login_required
 def cria_usuario(requisicao: HttpRequest):
